@@ -231,4 +231,11 @@ config IOMUX_LPSR
 config IOMUX_SHARE_CONF_REG
 	bool
 
+config TARGET_TS4900
+       bool "Support TS-4900"
+       select CPU_V7
+
+config TARGET_TS7970
+       bool "Support TS-7970"
+       select CPU_V7
 endif
