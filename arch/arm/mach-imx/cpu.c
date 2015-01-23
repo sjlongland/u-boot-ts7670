@@ -48,7 +48,7 @@ u32 get_imx_reset_cause(void)
 }
 
 #if defined(CONFIG_DISPLAY_CPUINFO) && !defined(CONFIG_XPL_BUILD)
-static char *get_reset_cause(void)
+char *get_reset_cause(void)
 {
 	switch (get_imx_reset_cause()) {
 	case 0x00001:
