@@ -357,6 +357,13 @@ int misc_init_r(void)
 	#else
 	setenv("cpu", "dl");
 	#endif
+
+	setenv("model", "4900");
+
+#if defined(CONFIG_DISPLAY_CPUINFO) && !defined(CONFIG_XPL_BUILD)
+	setenv("rcause", get_reset_cause());
+#endif
+
 	return 0;
 }
 

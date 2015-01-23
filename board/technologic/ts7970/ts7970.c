@@ -460,6 +460,11 @@ int misc_init_r(void)
 	setenv("cpu", "dl");
 	#endif
 
+	setenv("model", "7970");
+#if defined(CONFIG_DISPLAY_CPUINFO) && !defined(CONFIG_XPL_BUILD)
+	setenv("rcause", get_reset_cause());
+#endif
+
 	return 0;
 }
 
