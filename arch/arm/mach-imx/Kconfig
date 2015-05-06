@@ -220,4 +220,9 @@ config TARGET_TS7680
 	select CPU_ARM926EJS
 	select SUPPORT_SPL
 
+config TARGET_TS7695
+	bool "Support TS-7695"
+	select CPU_ARM926EJS
+	select SUPPORT_SPL
+
 endif
