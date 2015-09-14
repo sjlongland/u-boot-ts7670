@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: GPL-2.0+
 /*
  * (C) Copyright 2010
  * Stefano Babic, DENX Software Engineering, sbabic@denx.de.
@@ -8,13 +7,14 @@
  *
  * ispVM functions adapted from Lattice's ispmVMEmbedded code:
  * Copyright 2009 Lattice Semiconductor Corp.
+ *
+ * SPDX-License-Identifier:	GPL-2.0+
  */
 
-#include <log.h>
+#include <common.h>
 #include <malloc.h>
 #include <fpga.h>
 #include <lattice.h>
-#include <linux/delay.h>
 
 static lattice_board_specific_func *pfns;
 static const char *fpga_image;
@@ -34,6 +34,7 @@ extern unsigned short g_iHEAPSize;
 extern unsigned short g_usIntelDataIndex;
 extern unsigned short g_usIntelBufferSize;
 extern char *const g_szSupportedVersions[];
+
 
 /*
  * ispVMDelay
@@ -238,6 +239,8 @@ signed char ispVM(void)
 
 	printf("VME file checked: starting downloading to FPGA\n");
 
+	pfns->jtag_init();
+
 	ispVMStart();
 
 	cRetCode = ispVMCode();
@@ -350,8 +353,8 @@ int lattice_info(Lattice_desc *desc)
 			printf("Unsupported interface type, %d\n", desc->iface);
 		}
 
-		printf("Device Size:   \t%zu bytes\n",
-		       desc->size);
+		printf("Device Size:   \t%d bytes\n",
+				desc->size);
 
 		if (desc->iface_fns) {
 			printf("Device Function Table @ 0x%p\n",
