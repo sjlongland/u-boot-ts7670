@@ -108,7 +108,7 @@ int bmp_info(ulong addr)
 
 __weak void bmp_display_post(void)
 {
-	return 0;
+	return;
 }
 
 int bmp_display(ulong addr, int x, int y)
