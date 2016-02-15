@@ -169,9 +169,11 @@
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"autoload=no\0" \
 	"nfsroot=/nfsroot/\0" \
+        "kernel=/zImage\0" \
+	"fdtimage=/imx28-ts7400.dtb\0" \
 	"nfsip=192.168.0.1\0" \
 	"fdtaddr=0x41000000\0" \
-	"cmdline_append=rw rootwait console=ttyAMA0,115200 loglevel=3\0" \
+	"cmdline_append=rw rootwait console=ttyAMA0,115200\0" \
 	"boot_fdt=yes\0" \
 	"ip_dyn=yes\0" \
 	"clearenv=if sf probe; then " \
@@ -196,19 +198,19 @@
 			"then echo Booting from custom /boot/boot.ub; " \
 			"source ${loadaddr}; " \
 		"fi; " \
-		"load mmc 1:2 ${loadaddr} /boot/uImage; " \
-		"load mmc 1:2 ${fdtaddr} /boot/imx28-ts7400.dtb; " \
-		"setenv bootargs root=/dev/mmcblk2p2 ${cmdline_append}; " \
-		"bootm ${loadaddr} - ${fdtaddr}; \0"\
+		"load mmc 1:2 ${loadaddr} ${kernel}; " \
+		"load mmc 1:2 ${fdtaddr} ${fdtimage}; " \
+		"setenv bootargs root=/dev/mmcblk2p3 ${cmdline_append}; " \
+		"bootz ${loadaddr} - ${fdtaddr}; \0"\
 	"sdboot=echo Booting from the SD Card ...; " \
 		"if load mmc 0:2 ${loadaddr} /boot/boot.ub; " \
 			"then echo Booting from custom /boot/boot.ub; " \
 			"source ${loadaddr}; " \
 		"fi; " \
-		"load mmc 0:2 ${loadaddr} /boot/uImage; " \
-		"load mmc 0:2 ${fdtaddr} /boot/imx28-ts7400.dtb; " \
-		"setenv bootargs root=/dev/mmcblk0p2 ${cmdline_append}; " \
-		"bootm ${loadaddr} - ${fdtaddr}; \0"\
+		"load mmc 0:2 ${loadaddr} ${kernel}; " \
+		"load mmc 0:2 ${fdtaddr} ${fdtimage}; " \
+		"setenv bootargs root=/dev/mmcblk0p3 ${cmdline_append}; " \
+		"bootz ${loadaddr} - ${fdtaddr}; \0"\
 	"usbprod=usb start; " \
 		"if usb storage; " \
 			"then echo Checking USB storage for updates; " \
@@ -222,11 +224,11 @@
 	"nfsboot=echo Booting from NFS ...; " \
 		"dhcp; " \
 		"env set serverip ${nfsip}; " \
-		"nfs ${loadaddr} ${nfsroot}/boot/uImage; " \
+		"nfs ${loadaddr} ${nfsroot}/zImage; " \
 		"setenv bootargs root=/dev/nfs ip=dhcp " \
 		  "nfsroot=${serverip}:${nfsroot},vers=2,nolock ${cmdline_append}; " \
-		"nfs ${fdtaddr} ${nfsroot}/boot/imx28-ts7400.dtb; " \
-		"bootm ${loadaddr} - ${fdtaddr};\0"\
+		"nfs ${fdtaddr} ${nfsroot}/${fdtimage}; " \
+		"bootz ${loadaddr} - ${fdtaddr};\0"\
 
 #define CONFIG_BOOTCOMMAND \
 	"if test ${jpsdboot} = 'on' ; " \
