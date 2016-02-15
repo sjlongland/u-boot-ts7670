@@ -80,6 +80,7 @@
 #define CONFIG_OF_LIBFDT
 #define CONFIG_CMD_BOOTZ
 #define CONFIG_SUPPORT_RAW_INITRD
+#define CONFIG_FAT_WRITE
 
 /* Memory configuration */
 #define CONFIG_NR_DRAM_BANKS		1		/* 1 bank of DRAM */
@@ -92,14 +93,11 @@
 #define CONFIG_ENV_SIZE			(8 * 1024)
 #define CONFIG_ENV_OVERWRITE
 
-/* Environemnt is in SPI flash */
-#define CONFIG_ENV_IS_IN_SPI_FLASH
-#define CONFIG_ENV_OFFSET		0x100000	
-#define CONFIG_ENV_SECT_SIZE	(4 * 1024)
-#define CONFIG_ENV_SPI_CS		0
-#define CONFIG_ENV_SPI_BUS		2
-#define CONFIG_ENV_SPI_MAX_HZ		24000000
-#define CONFIG_ENV_SPI_MODE		SPI_MODE_0
+/* Environment is in FAT */
+#define CONFIG_ENV_IS_IN_FAT
+#define FAT_ENV_INTERFACE		"mmc"
+#define FAT_ENV_DEVICE_AND_PART		"0:2"
+#define FAT_ENV_FILE			"u-boot.env"
 
 /* FEC Ethernet on SoC */
 #ifdef	CONFIG_CMD_NET
