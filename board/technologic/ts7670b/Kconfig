@@ -1,0 +1,15 @@
+if TARGET_TS7670B
+
+config SYS_BOARD
+	default "ts7670b"
+
+config SYS_VENDOR
+	default "technologic"
+
+config SYS_SOC
+	default "mxs"
+
+config SYS_CONFIG_NAME
+	default "ts7670b"
+
+endif
