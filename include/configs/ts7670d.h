@@ -94,10 +94,10 @@
 #define CONFIG_ENV_OVERWRITE
 
 /* Environment is in FAT */
-#define CONFIG_ENV_IS_IN_FAT
-#define FAT_ENV_INTERFACE		"mmc"
-#define FAT_ENV_DEVICE_AND_PART		"0:2"
-#define FAT_ENV_FILE			"u-boot.env"
+#define CONFIG_ENV_IS_IN_EXT4
+#define EXT4_ENV_INTERFACE		"mmc"
+#define EXT4_ENV_DEVICE_AND_PART	"0:2"
+#define EXT4_ENV_FILE			"/boot/u-boot.env"
 
 /* FEC Ethernet on SoC */
 #ifdef	CONFIG_CMD_NET
@@ -169,8 +169,8 @@
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"autoload=no\0" \
 	"nfsroot=/nfsroot/\0" \
-        "kernel=/zImage\0" \
-	"fdtimage=/imx28-ts7670d.dtb\0" \
+        "kernel=/boot/zImage\0" \
+	"fdtimage=/boot/imx28-ts7670d.dtb\0" \
 	"nfsip=192.168.0.1\0" \
 	"fdtaddr=0x41000000\0" \
 	"cmdline_append=rw rootwait console=ttyAMA0,115200\0" \
@@ -209,7 +209,7 @@
 		"fi; " \
 		"load mmc 0:2 ${loadaddr} ${kernel}; " \
 		"load mmc 0:2 ${fdtaddr} ${fdtimage}; " \
-		"setenv bootargs root=/dev/mmcblk0p3 ${cmdline_append}; " \
+		"setenv bootargs root=/dev/mmcblk0p2 ${cmdline_append}; " \
 		"bootz ${loadaddr} - ${fdtaddr}; \0"\
 	"usbprod=usb start; " \
 		"if usb storage; " \
