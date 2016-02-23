@@ -225,6 +225,11 @@ config TARGET_TS7553
 	select CPU_ARM926EJS
 	select SUPPORT_SPL
 
+config TARGET_TS7670D
+	bool "Support TS-7670 rev D"
+	select CPU_ARM926EJS
+	select SUPPORT_SPL
+
 config TARGET_TS7680
 	bool "Support TS-7680"
 	select CPU_ARM926EJS
