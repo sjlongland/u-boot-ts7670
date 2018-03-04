@@ -19,7 +19,7 @@
 #include <asm/imx-common/mxc_i2c.h>
 #include <common.h>
 #include <fsl_esdhc.h>
-#include <libfdt.h>
+#include <linux/libfdt.h>
 #include <i2c.h>
 #include <mmc.h>
 #include <power/pfuze100_pmic.h>
