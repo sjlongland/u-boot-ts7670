@@ -9,6 +9,7 @@
 #include <log.h>
 #include <xilinx.h>             /* xilinx specific definitions */
 #include <altera.h>             /* altera specific definitions */
+#include <lattice.h>
 #include <dm/device_compat.h>
 
 /* Local static data */
@@ -78,6 +79,14 @@ static int fpga_dev_info(int devnum)
 			ret_val = altera_info(desc->devdesc);
 #else
 			log_err("No support for Altera devices.\n");
+#endif
+			break;
+		case fpga_lattice:
+#if defined(CONFIG_FPGA_LATTICE)
+			log_info("Lattice Device\nDescriptor @ 0x%p\n", desc);
+			ret_val = lattice_info(desc->devdesc);
+#else
+			log_err("No support for Lattice devices.\n");
 #endif
 			break;
 		default:
@@ -258,6 +267,13 @@ int fpga_load(int devnum, const void *buf, size_t bsize, bitstream_type bstype,
 			log_err("No support for Altera devices.\n");
 #endif
 			break;
+		case fpga_lattice:
+#if defined(CONFIG_FPGA_LATTICE)
+			ret_val = lattice_load(desc->devdesc, buf, bsize);
+#else
+			log_err("No support for Lattice devices.\n");
+#endif
+			break;
 		default:
 			log_err("Invalid or unsupported device type %d\n",
 				desc->devtype);
@@ -294,6 +310,13 @@ int fpga_dump(int devnum, const void *buf, size_t bsize)
 			ret_val = altera_dump(desc->devdesc, buf, bsize);
 #else
 			log_err("No support for Altera devices.\n");
+#endif
+			break;
+		case fpga_lattice:
+#if defined(CONFIG_FPGA_LATTICE)
+			ret_val = lattice_dump(desc->devdesc, buf, bsize);
+#else
+			log_err("No support for Lattice devices.\n");
 #endif
 			break;
 		default:
