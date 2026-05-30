@@ -240,14 +240,6 @@ config TARGET_TS4900
 	bool "Support TS-4900"
 	select CPU_V7
 
-config TARGET_TS7970
-	bool "Support TS-7970"
-	select CPU_V7
-
-config TARGET_TS7990
-	bool "Support TS-7990"
-	select CPU_V7
-
 config TARGET_TS7553
 	bool "Support TS-7553 v2"
 	select CPU_ARM926EJS
@@ -272,5 +264,13 @@ config TARGET_TS7695
 	bool "Support TS-7695"
 	select CPU_ARM926EJS
 	select SUPPORT_SPL
+
+config TARGET_TS7970
+	bool "Support TS-7970"
+	select CPU_V7
+
+config TARGET_TS7990
+	bool "Support TS-7990"
+	select CPU_V7
 
 endif
