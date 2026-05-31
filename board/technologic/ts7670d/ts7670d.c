@@ -22,6 +22,7 @@
 #include <linux/types.h>
 #include <miiphy.h>
 #include <netdev.h>
+#include <env.h>
 #include <errno.h>
 #include <spi.h>
 #include <fpga.h>
@@ -70,13 +71,13 @@ int misc_init_r(void)
 {
 	int sdboot = 0;
 
-	setenv("model", "7670D");
+	env_set("model", "7670D");
 
 	gpio_direction_input(TS7670D_V2_SDBOOT_JP);
 	sdboot = gpio_get_value(TS7670D_V2_SDBOOT_JP);
 
-	if(sdboot) setenv("jpsdboot", "off");
-	else setenv("jpsdboot", "on");
+	if(sdboot) env_set("jpsdboot", "off");
+	else env_set("jpsdboot", "on");
 
 	return 0;
 }
