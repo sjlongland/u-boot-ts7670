@@ -135,7 +135,6 @@
 #define CONFIG_BAUDRATE			       115200
 
 /* Command definition */
-#include <config_cmd_default.h>
 
 #undef CONFIG_CMD_IMLS
 
