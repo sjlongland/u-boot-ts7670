@@ -99,7 +99,7 @@ static int ts7670D_mmc_cd(int id) {
 	return 1;
 }
 
-int board_mmc_init(bd_t *bis)
+int board_mmc_init(struct bd_info *bis)
 {
 	int ret;
 	mxs_iomux_setup_pad(TS7670D_V2_EN_SDPWR);
