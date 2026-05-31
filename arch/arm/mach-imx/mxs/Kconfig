@@ -48,6 +48,36 @@ config TARGET_MX28EVK
 	select PL01X_SERIAL
 	select BOARD_EARLY_INIT_F
 
+config TARGET_TS7400_V2
+	bool "Support TS-7400 v2"
+	select PL01X_SERIAL
+	select BOARD_EARLY_INIT_F
+
+config TARGET_TS7553
+	bool "Support TS-7553 v2"
+	select PL01X_SERIAL
+	select BOARD_EARLY_INIT_F
+
+config TARGET_TS7670B
+	bool "Support TS-7670 rev B"
+	select PL01X_SERIAL
+	select BOARD_EARLY_INIT_F
+
+config TARGET_TS7670D
+	bool "Support TS-7670 rev D"
+	select PL01X_SERIAL
+	select BOARD_EARLY_INIT_F
+
+config TARGET_TS7680
+	bool "Support TS-7680"
+	select PL01X_SERIAL
+	select BOARD_EARLY_INIT_F
+
+config TARGET_TS7695
+	bool "Support TS-7695"
+	select PL01X_SERIAL
+	select BOARD_EARLY_INIT_F
+
 config TARGET_XEA
 	bool "Support XEA"
 	select PL01X_SERIAL
