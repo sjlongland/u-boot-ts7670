@@ -159,7 +159,7 @@
 			i2c0: i2c@80058000 {
 				pinctrl-names = "default";
 				pinctrl-0 = <&i2c0_pins_a>;
-				clock-frequency = <400000>;
+				clock-frequency = <100000>;
 				status = "okay";
 
 				isl12022@6f {
@@ -167,8 +167,8 @@
 					reg = <0x6f>;
 				};
 
-				silabs: silabs@78 {
-					compatible = "ts-wdt";
+				ts_wdt: ts_wdt@78 {
+					compatible = "technologicsystems,ts-wdt";
 					reg = <0x78>;
 				};
 			};
