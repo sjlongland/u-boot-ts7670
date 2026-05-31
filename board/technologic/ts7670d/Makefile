@@ -7,9 +7,6 @@
 
 obj-y	:= ts7670d.o
 
-ifndef	CONFIG_SPL_BUILD
-obj-y   += led.o
-else
+ifdef	CONFIG_SPL_BUILD
 obj-y	+= iomux.o
 endif
-
