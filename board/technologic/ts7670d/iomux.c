@@ -14,7 +14,6 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
-#include <common.h>
 #include <config.h>
 #include <asm/io.h>
 #include <asm/arch/iomux-mx28.h>
