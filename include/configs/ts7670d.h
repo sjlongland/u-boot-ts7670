@@ -84,13 +84,6 @@
 #define EXT4_ENV_DEVICE_AND_PART	"0:2"
 #define EXT4_ENV_FILE			"/u-boot.env"
 
-/* FEC Ethernet on SoC */
-#ifdef	CONFIG_CMD_NET
-#define CONFIG_FEC_MXC
-#define CONFIG_NET_MULTI
-#define CONFIG_MX28_FEC_MAC_IN_OCOTP
-#endif
-
 /* I2C */
 #define CONFIG_CMD_I2C
 #define CONFIG_I2C_MXS
