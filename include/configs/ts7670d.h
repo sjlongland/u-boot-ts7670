@@ -48,22 +48,6 @@
 #define CONFIG_FPGA_TCK                 MX28_PAD_LCD_D23__GPIO_1_23
 #define CONFIG_FPGA_TDO                 MX28_PAD_LCD_D21__GPIO_1_21
 
-#define CONFIG_CMD_CACHE
-#define CONFIG_CMD_DHCP
-#define CONFIG_CMD_GPIO
-#define CONFIG_CMD_MII
-#define CONFIG_CMD_MMC
-#define CONFIG_CMD_FS_GENERIC
-#define CONFIG_CMD_NFS
-#define CONFIG_CMD_PING
-#define CONFIG_CMD_BOOTZ
-#define CONFIG_CMD_SF
-#define CONFIG_CMD_SPI
-#define CONFIG_CMD_USB
-#define CONFIG_CMD_TIME
-#define CONFIG_CMD_BOOTZ
-#define CONFIG_SUPPORT_RAW_INITRD
-
 /* Memory configuration */
 #define PHYS_SDRAM_1			0x40000000	/* Base address */
 #define PHYS_SDRAM_1_SIZE		0x40000000	/* Max 1 GB RAM */
