@@ -9,12 +9,8 @@
 #ifndef __CONFIGS_TS7670D_H__
 #define __CONFIGS_TS7670D_H__
 
-/* System configurations */
-#define CONFIG_MX28				/* i.MX28 SoC */
-
 /* U-Boot Commands */
 #define CONFIG_SYS_NO_FLASH
-#define CONFIG_DISPLAY_CPUINFO
 #define CONFIG_DOS_PARTITION
 
 #define CONFIG_BOARD_SPECIFIC_LED
@@ -65,31 +61,25 @@
 #define CONFIG_CMD_EXT4
 #define CONFIG_CMD_EXT4_WRITE
 #define CONFIG_CMD_FS_GENERIC
-#define CONFIG_CMD_NET
 #define CONFIG_CMD_NFS
 #define CONFIG_CMD_PING
-#define CONFIG_CMD_SAVEENV
-#define CONFIG_CMD_SETEXPR
 #define CONFIG_CMD_BOOTZ
 #define CONFIG_CMD_SF
 #define CONFIG_CMD_SPI
 #define CONFIG_CMD_USB
 #define CONFIG_CMD_TIME
-#define CONFIG_LIB_RAND
 #define CONFIG_OF_LIBFDT
 #define CONFIG_CMD_BOOTZ
 #define CONFIG_SUPPORT_RAW_INITRD
 #define CONFIG_FAT_WRITE
 
 /* Memory configuration */
-#define CONFIG_NR_DRAM_BANKS		1		/* 1 bank of DRAM */
 #define PHYS_SDRAM_1			0x40000000	/* Base address */
 #define PHYS_SDRAM_1_SIZE		0x40000000	/* Max 1 GB RAM */
 #define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
 
 /* Environment */
 #define CONFIG_SYS_NO_FLASH
-#define CONFIG_ENV_SIZE			(8 * 1024)
 #define CONFIG_ENV_OVERWRITE
 
 /* Environment is in FAT */
@@ -146,16 +136,11 @@
 #endif
 
 #define CONFIG_LOADADDR		0x42000000
-#define CONFIG_SYS_LOAD_ADDR	CONFIG_LOADADDR
 #define CONFIG_MISC_INIT_R
 
 /* Miscellaneous configurable options */
-#define CONFIG_SYS_LONGHELP
 #define CONFIG_SYS_HUSH_PARSER
-#define CONFIG_SYS_PROMPT              "U-Boot > "
-#define CONFIG_AUTO_COMPLETE
 
-#define CONFIG_BOOTDELAY	           1
 #define CONFIG_AUTOBOOT_KEYED          1
 #define CONFIG_AUTOBOOT_PROMPT         "Press Ctrl+C to abort autoboot in %d second(s)\n", bootdelay
 #define CTRL(c) ((c)&0x1F)     
