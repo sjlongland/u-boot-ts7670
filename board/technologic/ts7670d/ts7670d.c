@@ -149,10 +149,6 @@ int board_eth_init(struct bd_info *bis)
 	struct udevice *dev;
 	int ret;
 	uint8_t enetaddr[6];
-	uint8_t val = 0x2;
-
-	/* Take switch out of reset */
-	i2c_write(0x28, 0x2b, 2, &val, 1);
 
 	ret = cpu_eth_init(bis);
 	if (ret)
