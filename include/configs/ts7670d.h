@@ -141,7 +141,7 @@
 #define CONFIG_SYS_HUSH_PARSER
 
 #define CONFIG_AUTOBOOT_KEYED          1
-#define CONFIG_AUTOBOOT_PROMPT         "Press Ctrl+C to abort autoboot in %d second(s)\n", bootdelay
+#define CONFIG_AUTOBOOT_PROMPT         "Press Ctrl+C to abort autoboot in %d second(s)\n"
 #define CTRL(c) ((c)&0x1F)     
 #define CONFIG_AUTOBOOT_STOP_STR       (char []){CTRL('C'), 0}
 
