@@ -53,10 +53,6 @@
 #define CONFIG_CMD_GPIO
 #define CONFIG_CMD_MII
 #define CONFIG_CMD_MMC
-#define CONFIG_CMD_EXT2
-#define CONFIG_CMD_FAT
-#define CONFIG_CMD_EXT4
-#define CONFIG_CMD_EXT4_WRITE
 #define CONFIG_CMD_FS_GENERIC
 #define CONFIG_CMD_NFS
 #define CONFIG_CMD_PING
@@ -67,7 +63,6 @@
 #define CONFIG_CMD_TIME
 #define CONFIG_CMD_BOOTZ
 #define CONFIG_SUPPORT_RAW_INITRD
-#define CONFIG_FAT_WRITE
 
 /* Memory configuration */
 #define PHYS_SDRAM_1			0x40000000	/* Base address */
@@ -77,12 +72,6 @@
 /* Environment */
 #define CONFIG_SYS_NO_FLASH
 #define CONFIG_ENV_OVERWRITE
-
-/* Environment is in FAT */
-#define CONFIG_ENV_IS_IN_EXT4
-#define EXT4_ENV_INTERFACE		"mmc"
-#define EXT4_ENV_DEVICE_AND_PART	"0:2"
-#define EXT4_ENV_FILE			"/u-boot.env"
 
 /* I2C */
 #define CONFIG_CMD_I2C
