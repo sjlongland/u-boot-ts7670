@@ -5,9 +5,11 @@
 # SPDX-License-Identifier:	GPL-2.0+
 #
 
+obj-y	:= ts7670d.o
+
 ifndef	CONFIG_SPL_BUILD
-obj-y	:= ts7670d.o led.o
+obj-y   += led.o
 else
-obj-y	:= iomux.o
+obj-y	+= iomux.o
 endif
 
