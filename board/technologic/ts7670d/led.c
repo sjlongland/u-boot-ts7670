@@ -1,10 +1,11 @@
-#include <common.h>
 #include <asm/io.h>
 #include <asm/arch/gpio.h>
 #include <asm/gpio.h>
 #include <asm/arch/iomux-mx28.h>
 #include <asm/arch/imx-regs.h>
 #include <asm/arch/iomux.h>
+#include <config.h>
+#include <linux/types.h>
 #include <status_led.h>
 
 static unsigned int saved_state[4] = {STATUS_LED_OFF,
