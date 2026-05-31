@@ -47,36 +47,6 @@
 /* Memory configuration */
 #define PHYS_SDRAM_1			0x40000000	/* Base address */
 #define PHYS_SDRAM_1_SIZE		0x40000000	/* Max 1 GB RAM */
-#define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
-
-/* Environment */
-#define CONFIG_SYS_NO_FLASH
-#define CONFIG_ENV_OVERWRITE
-
-/* SPI */
-#ifdef CONFIG_CMD_SPI
-#define CONFIG_DEFAULT_SPI_BUS		2
-#define CONFIG_DEFAULT_SPI_MODE		SPI_MODE_0
-
-/* SPI Flash */
-#ifdef CONFIG_CMD_SF
-#define CONFIG_SPI_FLASH
-#define CONFIG_SPI_FLASH_STMICRO
-#define CONFIG_SPI_FLASH_ISSI
-#define CONFIG_SF_DEFAULT_BUS		2
-#define CONFIG_SF_DEFAULT_CS		0
-/* this may vary and depends on the installed chip */
-#define CONFIG_SF_DEFAULT_MODE		SPI_MODE_0
-#define CONFIG_SF_DEFAULT_SPEED		24000000
-#endif
-
-#endif
-
-#define CONFIG_LOADADDR		0x42000000
-#define CONFIG_MISC_INIT_R
-
-/* Miscellaneous configurable options */
-#define CONFIG_SYS_HUSH_PARSER
 
 #define CONFIG_AUTOBOOT_KEYED          1
 #define CONFIG_AUTOBOOT_PROMPT         "Press Ctrl+C to abort autoboot in %d second(s)\n"
@@ -153,12 +123,6 @@
 		"nfs ${fdtaddr} ${nfsroot}/${fdtimage}; " \
 		"bootz ${loadaddr} - ${fdtaddr};\0"\
 
-#define CONFIG_BOOTCOMMAND \
-	"if test ${jpsdboot} = 'on' ; " \
-		"then run sdboot; " \
-		"else run emmcboot; " \
-	"fi;"
-	
 /* The rest of the configuration is shared */
 #include <configs/mxs.h>
 
