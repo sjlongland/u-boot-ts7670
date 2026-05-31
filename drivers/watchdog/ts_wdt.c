@@ -17,23 +17,17 @@
  */
 
 #include <config.h>
+#include <dm.h>
 #include <i2c.h>
 #include <log.h>
 #include <watchdog.h>
 
+static uint16_t ts_wdt_timeout;
+
 #define TS_DEFAULT_TIMEOUT 30
-#define TS_WATCHDOG_DISABLE 65535
 
 #ifndef CONFIG_WATCHDOG_TIMEOUT_MSECS
 #define CONFIG_WATCHDOG_TIMEOUT_MSECS (TS_DEFAULT_TIMEOUT * 1000)
-#endif
-
-#ifndef CONFIG_WATCHDOG_TSWDOG_BUS
-#define CONFIG_WATCHDOG_TSWDOG_BUS (~0)
-#endif
-
-#ifndef CONFIG_WATCHDOG_TSWDOG_ADDR
-#define CONFIG_WATCHDOG_TSWDOG_ADDR (~0)
 #endif
 
 /* The WDT expects 3 values:
@@ -50,37 +44,65 @@
  * 4 - disable watchdog
  */
 
-static int ts_wdt_write(u16 deciseconds)
+#define TS_WDT_CMD_TIMEOUT_0S2 (0x0000)
+#define TS_WDT_CMD_TIMEOUT_2S (0x0001)
+#define TS_WDT_CMD_TIMEOUT_4S (0x0002)
+#define TS_WDT_CMD_TIMEOUT_10S (0x0003)
+#define TS_WDT_CMD_STOP (0x0004)
+
+static int ts_wdt_write(struct udevice *dev, u16 cmd)
 {
 	u8 out[2];
 
-	out[0] = (deciseconds & 0xff00) >> 8;
-	out[1] = deciseconds & 0xff;
+	out[0] = (cmd & 0xff00) >> 8;
+	out[1] = cmd & 0xff;
 
-	debug("select I2C bus %d\n", CONFIG_WATCHDOG_TSWDOG_BUS);
-	if (i2c_set_bus_num(CONFIG_WATCHDOG_TSWDOG_BUS))
-		return -1;
-
-	debug("set timeout %d 0.1sec\n", deciseconds);
-	if (i2c_write(CONFIG_WATCHDOG_TSWDOG_ADDR, 0, 1, out, 2))
-		return -1;
-
-	debug("done\n");
-	return 0;
+	return dm_i2c_write(dev->parent, 0, out, 2);
 }
 
-#ifdef CONFIG_TECHNOLOGIC_WATCHDOG
-void hw_watchdog_reset(void)
+static int ts_wdt_stop(struct udevice *dev)
 {
-	/* Disable watchdog */
-	debug("Resetting watchdog\n");
-	ts_wdt_write(CONFIG_WATCHDOG_TIMEOUT_MSECS/100);
+	return ts_wdt_write(dev, TS_WDT_CMD_STOP);
 }
 
-void hw_watchdog_init(void)
+static int ts_wdt_reset(struct udevice *dev)
 {
-	/* Timeout is in .1 secs */
-	debug("Initialising watchdog\n");
-	ts_wdt_write(CONFIG_WATCHDOG_TIMEOUT_MSECS/100);
+	return ts_wdt_write(dev, ts_wdt_timeout);
 }
-#endif
+
+static int ts_wdt_start(struct udevice *dev, u64 timeout, ulong flags)
+{
+	(void)flags;
+
+	/* Units of 0.1 sec */
+	if (timeout < 100) {
+		/* Too small */
+		return -ENOTSUP;
+	}
+
+	return ts_wdt_reset(dev, ts_wdt_timeout);
+}
+
+static int ts_wdt_expire_now(struct udevice *dev, ulong flags)
+{
+	return ts_wdt_write(dev, TS_WDT_CMD_TIMEOUT_0S2);
+}
+
+static const struct wdt_ops ts_wdt_ops = {
+	.start = ts_wdt_start,
+	.stop = ts_wdt_stop,
+	.reset = ts_wdt_reset,
+	.expire_now = ts_wdt_expire_now,
+};
+
+static const struct udevice_id ts_wdt_ids[] = {
+	{ .compatible = "technologicsystems,ts-wdt", },
+	{}
+};
+
+U_BOOT_DRIVER(ts_wdt) = {
+	.name = "ts-wdt",
+	.id = UCLASS_WDT,
+	.of_match = ts_wdt_ids,
+	.ops = &ts_wdt_ops,
+};
