@@ -23,18 +23,6 @@
 
 	apb@80000000 {
 		apbh@80000000 {
-			emmc: ssp@80012000 {
-				compatible = "fsl,imx28-mmc";
-				pinctrl-names = "default";
-				pinctrl-0 = <&mmc1_4bit_pins_a
-					&mmc1_sck_cfg>;
-				bus-width = <4>;
-				vmmc-supply = <&reg_vddio_sd0>;
-				status = "okay";
-				broken-cd;
-				non-removable;
-			};
-
 			pinctrl@80018000 {
 				pinctrl-names = "default";
 				pinctrl-0 = <&hog_pins_a>;
