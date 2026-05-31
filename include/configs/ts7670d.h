@@ -43,8 +43,6 @@
 #define STATUS_LED_STATE3               STATUS_LED_OFF
 #define STATUS_LED_PERIOD3              (CONFIG_SYS_HZ / 2)
 
-#define CONFIG_FPGA
-#define CONFIG_FPGA_LATTICE
 #define CONFIG_FPGA_TDI                 MX28_PAD_LCD_D17__GPIO_1_17
 #define CONFIG_FPGA_TMS                 MX28_PAD_LCD_D18__GPIO_1_18
 #define CONFIG_FPGA_TCK                 MX28_PAD_LCD_D23__GPIO_1_23
