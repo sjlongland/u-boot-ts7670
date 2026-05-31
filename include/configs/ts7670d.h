@@ -12,10 +12,6 @@
 /* U-Boot Commands */
 #define CONFIG_SYS_NO_FLASH
 
-#define CONFIG_BOARD_SPECIFIC_LED
-#define CONFIG_STATUS_LED
-#define CONFIG_CMD_LED
-
 #define STATUS_LED_BOOT			STATUS_LED_GREEN
 
 #define CONFIG_RED_LED                  MX28_PAD_GPMI_D07__GPIO_0_7
