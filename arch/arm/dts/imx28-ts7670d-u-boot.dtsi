@@ -7,3 +7,31 @@
  */
 
 #include "imx28-u-boot.dtsi"
+
+/ {
+	options {
+		u-boot {
+			compatible = "u-boot,config";
+			boot-led = <&led_power>;
+			activity-led = <&led_activity>;
+		};
+	};
+
+	leds {
+		led_status2: status2 {
+			default-state = "off";
+		};
+
+		led_status1: status1 {
+			default-state = "off";
+		};
+
+		led_power: power {
+			default-state = "off";
+		};
+
+		led_activity: activity {
+			default-state = "off";
+		};
+	};
+};
