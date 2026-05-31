@@ -130,9 +130,9 @@ int board_eth_init(struct bd_info *bis)
 {
 	struct mxs_clkctrl_regs *clkctrl_regs =
 		(struct mxs_clkctrl_regs *)MXS_CLKCTRL_BASE;
-	struct eth_device *dev;
+	struct udevice *dev;
 	int ret;
-	uchar enetaddr[6];
+	uint8_t enetaddr[6];
 	uint8_t val = 0x2;
 
 	/* Take switch out of reset */
@@ -158,10 +158,10 @@ int board_eth_init(struct bd_info *bis)
 		return -EINVAL;
 	}
 
-	eth_parse_enetaddr(getenv("ethaddr"), enetaddr);
-        if (!enetaddr[3] && !enetaddr[4] && !enetaddr[5]) {
+	if (!eth_env_get_enetaddr("ethaddr", enetaddr)
+			|| (!enetaddr[3] && !enetaddr[4] && !enetaddr[5])) {
                 printf("No MAC address set in fuses.  Using random mac address.\n");
-                eth_random_addr(enetaddr);
+                net_random_ethaddr(enetaddr);
                 random_mac = 1;
                 if (eth_env_set_enetaddr("ethaddr", enetaddr)) {
                         printf("Failed to set ethernet address\n");
