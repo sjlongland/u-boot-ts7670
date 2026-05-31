@@ -203,39 +203,9 @@ config IOMUX_LPSR
 config IOMUX_SHARE_CONF_REG
 	bool
 
-config TARGET_TS7400_V2
-	bool "Support TS-7400 v2"
-	select CPU_ARM926EJS
-	select SUPPORT_SPL
-
 config TARGET_TS4900
 	bool "Support TS-4900"
 	select CPU_V7
-
-config TARGET_TS7553
-	bool "Support TS-7553 v2"
-	select CPU_ARM926EJS
-	select SUPPORT_SPL
-
-config TARGET_TS7670B
-	bool "Support TS-7670 rev B"
-	select CPU_ARM926EJS
-	select SUPPORT_SPL
-
-config TARGET_TS7670D
-	bool "Support TS-7670 rev D"
-	select CPU_ARM926EJS
-	select SUPPORT_SPL
-
-config TARGET_TS7680
-	bool "Support TS-7680"
-	select CPU_ARM926EJS
-	select SUPPORT_SPL
-
-config TARGET_TS7695
-	bool "Support TS-7695"
-	select CPU_ARM926EJS
-	select SUPPORT_SPL
 
 config TARGET_TS7970
 	bool "Support TS-7970"
