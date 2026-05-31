@@ -17,6 +17,7 @@
 #include <asm/arch/iomux-mx28.h>
 #include <asm/arch/clock.h>
 #include <asm/arch/sys_proto.h>
+#include <asm/spl.h>
 #include <config.h>
 #include <linux/delay.h>
 #include <linux/mii.h>
@@ -37,6 +38,7 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 int random_mac = 0;
+static int ts7670d_get_sdboot_jp(void);
 
 void mx28_adjust_mac(int dev_id, unsigned char *mac)
 {
@@ -68,19 +70,33 @@ int dram_init(void)
 	return mxs_dram_init();
 }
 
+static int ts7670d_get_sdboot_jp(void)
+{
+	gpio_direction_input(TS7670D_V2_SDBOOT_JP);
+	return gpio_get_value(TS7670D_V2_SDBOOT_JP);
+}
+
 int misc_init_r(void)
 {
 	int sdboot = 0;
 
 	env_set("model", "7670D");
 
-	gpio_direction_input(TS7670D_V2_SDBOOT_JP);
-	sdboot = gpio_get_value(TS7670D_V2_SDBOOT_JP);
+	sdboot = ts7670d_get_sdboot_jp();
 
 	if(sdboot) env_set("jpsdboot", "off");
 	else env_set("jpsdboot", "on");
 
 	return 0;
+}
+
+void board_boot_order(u32 *spl_boot_list)
+{
+	if (ts7670d_get_sdboot_jp() > 0) {
+		spl_boot_list[0] = BOOT_DEVICE_MMC1;
+	} else {
+		spl_boot_list[0] = BOOT_DEVICE_MMC2;
+	}
 }
 
 int board_init(void)
