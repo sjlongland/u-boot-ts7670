@@ -1484,7 +1484,7 @@ static int fecmxc_of_to_plat(struct udevice *dev)
 #endif
 
 #if CONFIG_IS_ENABLED(DM_GPIO)
-	ret = gpio_request_by_name(dev, "phy-reset-gpios", 0,
+	int ret = gpio_request_by_name(dev, "phy-reset-gpios", 0,
 				   &priv->phy_reset_gpio, GPIOD_IS_OUT | GPIOD_IS_OUT_ACTIVE);
 	if (ret < 0)
 		return 0; /* property is optional, don't return error! */
