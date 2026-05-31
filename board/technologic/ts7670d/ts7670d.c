@@ -18,6 +18,7 @@
 #include <asm/arch/clock.h>
 #include <asm/arch/sys_proto.h>
 #include <config.h>
+#include <linux/delay.h>
 #include <linux/mii.h>
 #include <linux/types.h>
 #include <miiphy.h>
