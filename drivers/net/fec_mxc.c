@@ -1472,7 +1472,6 @@ static int fecmxc_remove(struct udevice *dev)
 
 static int fecmxc_of_to_plat(struct udevice *dev)
 {
-	int ret = 0;
 	struct eth_pdata *pdata = dev_get_plat(dev);
 	struct fec_priv *priv = dev_get_priv(dev);
 
