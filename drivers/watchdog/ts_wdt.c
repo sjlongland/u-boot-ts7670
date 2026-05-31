@@ -16,9 +16,9 @@
  * GNU General Public License for more details.
  */
 
-#include <common.h>
 #include <config.h>
 #include <i2c.h>
+#include <log.h>
 #include <watchdog.h>
 
 #define TS_DEFAULT_TIMEOUT 30
