@@ -163,7 +163,7 @@ int board_eth_init(struct bd_info *bis)
                 printf("No MAC address set in fuses.  Using random mac address.\n");
                 eth_random_addr(enetaddr);
                 random_mac = 1;
-                if (eth_setenv_enetaddr("ethaddr", enetaddr)) {
+                if (eth_env_set_enetaddr("ethaddr", enetaddr)) {
                         printf("Failed to set ethernet address\n");
                 }
         }
