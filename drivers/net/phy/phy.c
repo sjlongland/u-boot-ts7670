@@ -75,7 +75,7 @@ static int genphy_config_advert(struct phy_device *phydev)
 	if (advertise & ADVERTISED_1000baseX_Full)
 		adv |= ADVERTISE_1000XFULL;
 
-	if(getenv("disable_giga")) {
+	if(env_get("disable_giga")) {
 		adv &= ~(ADVERTISE_1000XHALF | ADVERTISE_1000XFULL);
 	}
 
@@ -109,7 +109,7 @@ static int genphy_config_advert(struct phy_device *phydev)
 
 	if (phydev->supported & (SUPPORTED_1000baseT_Half |
 				SUPPORTED_1000baseT_Full)) {
-		if(!getenv("disable_giga")) {
+		if(!env_get("disable_giga")) {
 			if (advertise & SUPPORTED_1000baseT_Half)
 				adv |= ADVERTISE_1000HALF;
 			if (advertise & SUPPORTED_1000baseT_Full)
@@ -281,12 +281,12 @@ int genphy_update_link(struct phy_device *phydev)
 		}
 		printf(" done (%dms)\n", i);
 
-		/* The timer used in eth_random_addr doesn't work very well from poweron.  If
+		/* The timer used in net_random_ethaddr doesn't work very well from poweron.  If
 		 * I need a random mac, getting it with linkup seems much more unique */
 		if(random_mac) {
 			uchar enetaddr[6];
-			eth_random_addr(enetaddr);
-			eth_setenv_enetaddr("ethaddr", enetaddr);
+			net_random_ethaddr(enetaddr);
+			eth_env_set_enetaddr("ethaddr", enetaddr);
 		}
 		phydev->link = 1;
 	} else {
