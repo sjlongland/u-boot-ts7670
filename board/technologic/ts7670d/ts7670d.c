@@ -102,9 +102,13 @@ int board_mmc_init(bd_t *bis)
 	int ret;
 	mxs_iomux_setup_pad(TS7670D_V2_EN_SDPWR);
 
+	printf("[Powering On]\rMMC:   ");
 	gpio_direction_output(TS7670D_V2_EN_SDPWR, 1); // EN_SD_POWER#
 	udelay(1000);
 	gpio_direction_output(TS7670D_V2_EN_SDPWR, 0);
+
+	/* Wait a little bit for the card to wake up fully */
+	udelay(1000000);
 
 	/* SD card */
 	ret = mxsmmc_initialize(bis, 0, NULL, ts7670D_mmc_cd);
