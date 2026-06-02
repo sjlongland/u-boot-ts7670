@@ -85,13 +85,11 @@ static int ts_wdt_start(struct udevice *dev, u64 timeout, ulong flags)
 	}
 
 	priv->timeout = timeout / 100;
-	pr_info("Starting watchdog with delay=%u\n", priv->timeout);
 	return ts_wdt_reset(dev);
 }
 
 static int ts_wdt_expire_now(struct udevice *dev, ulong flags)
 {
-	pr_info("EXPIRE now\n");
 	return ts_wdt_write(dev, TS_WDT_CMD_TIMEOUT_0S2);
 }
 
