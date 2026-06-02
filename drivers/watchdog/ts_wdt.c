@@ -24,6 +24,7 @@
 #include <linux/printk.h>
 
 struct ts_wdt_priv {
+	/* Timeout in 0.1 second units */
 	uint16_t timeout;
 };
 
@@ -34,7 +35,7 @@ struct ts_wdt_priv {
 #endif
 
 /* The WDT expects 3 values:
- * 0 (always)
+ * 0 (always; register address)
  * and two bytes for the feed length in deciseconds
  * 1 <MSB>
  * 2 <LSB>
@@ -55,6 +56,10 @@ struct ts_wdt_priv {
 
 static int ts_wdt_write(struct udevice *dev, u16 cmd)
 {
+	/*
+	 * The initial 0 is taken care of, we only need to send the duration
+	 * which is given in big-endian format.
+	 */
 	u8 out[2];
 
 	out[0] = (cmd & 0xff00) >> 8;
