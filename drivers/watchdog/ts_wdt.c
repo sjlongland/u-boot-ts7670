@@ -28,12 +28,6 @@ struct ts_wdt_priv {
 	uint16_t timeout;
 };
 
-#define TS_DEFAULT_TIMEOUT 30
-
-#ifndef CONFIG_WATCHDOG_TIMEOUT_MSECS
-#define CONFIG_WATCHDOG_TIMEOUT_MSECS (TS_DEFAULT_TIMEOUT * 1000)
-#endif
-
 /* The WDT expects 3 values:
  * 0 (always; register address)
  * and two bytes for the feed length in deciseconds
