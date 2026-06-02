@@ -12,4 +12,51 @@ config SYS_SOC
 config SYS_CONFIG_NAME
 	default "ts7670d"
 
+choice
+	prompt "Environment file location"
+	default TARGET_TS7670_ENV_LOCATION_CN3
+
+config TARGET_TS7670_ENV_LOCATION_CN3
+	bool "SD card in socket CN3"
+
+config TARGET_TS7670_ENV_LOCATION_EMMC
+	bool "eMMC"
+
+config TARGET_TS7670_ENV_LOCATION_CUSTOM
+	bool "Custom"
+
+endchoice
+
+if TARGET_TS7670_ENV_LOCATION_CN3
+config TARGET_TS7670_ENV_LOCATION_INTERFACE
+	default "mmc"
+
+config TARGET_TS7670_ENV_LOCATION_DEVICE_AND_PART
+	default "0:2"
+endif
+
+if TARGET_TS7670_ENV_LOCATION_EMMC
+config TARGET_TS7670_ENV_LOCATION_INTERFACE
+	default "mmc"
+
+config TARGET_TS7670_ENV_LOCATION_DEVICE_AND_PART
+	default "1:2"
+endif
+
+if TARGET_TS7670_ENV_LOCATION_CUSTOM
+
+config TARGET_TS7670_ENV_LOCATION_INTERFACE
+	string "Environment location interface"
+	default "mmc"
+
+config TARGET_TS7670_ENV_LOCATION_DEVICE_AND_PART
+	string "Environment location device:partition"
+	default "0:2"
+
+endif
+
+config TARGET_TS7670_ENV_LOCATION_FILENAME
+	string "Environment location filename"
+	default "/u-boot.env"
+
 endif
