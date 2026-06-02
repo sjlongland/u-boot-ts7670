@@ -470,6 +470,12 @@ config WDT_TEGRA
 	help
 	  Enable support for the watchdog timer found in Tegra SoCs.
 
+config WDT_TSWDT
+	bool "Technologic Systems watchdog"
+	depends on WDT && I2C
+	help
+	  Enable support for the watchdog timer found in Tegra SoCs.
+
 config WDT_ARM_SMC
 	bool "ARM SMC watchdog timer support"
 	depends on WDT && ARM_SMCCC
