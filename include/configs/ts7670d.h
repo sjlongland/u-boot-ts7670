@@ -26,7 +26,7 @@
 		" setenv bootdelay 5; "
 
 /* Extra Environment */
-#define CONFIG_EXTRA_ENV_SETTINGS \
+#define CFG_EXTRA_ENV_SETTINGS \
 	"autoload=no\0" \
 	"nfsroot=/nfsroot/\0" \
         "kernel=/zImage\0" \
