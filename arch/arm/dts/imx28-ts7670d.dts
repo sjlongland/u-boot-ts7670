@@ -152,6 +152,7 @@
 			compatible = "technologic,ts-wdt";
 			reg = <0x78>;
 			status = "okay";
+			u-boot,autostart;
 		};
 	};
 };
