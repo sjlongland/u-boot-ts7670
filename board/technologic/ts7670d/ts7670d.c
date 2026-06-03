@@ -62,6 +62,15 @@ int board_early_init_f(void)
 	/* SSP2 clock at 160MHz */
 	mxs_set_sspclk(MXC_SSPCLK2, 160000, 0);
 
+	/* Power-cycle eMMC */
+	mxs_iomux_setup_pad(TS7670D_V2_EN_SDPWR);
+	gpio_direction_output(TS7670D_V2_EN_SDPWR, 1); // EN_SD_POWER#
+	udelay(1000);
+	gpio_direction_output(TS7670D_V2_EN_SDPWR, 0);
+
+	/* Wait a little bit for the card to wake up fully */
+	udelay(1000000);
+
 	return 0;
 }
 
@@ -119,15 +128,6 @@ static int ts7670D_mmc_cd(int id) {
 int board_mmc_init(struct bd_info *bis)
 {
 	int ret;
-	mxs_iomux_setup_pad(TS7670D_V2_EN_SDPWR);
-
-	printf("[Powering On]\rMMC:   ");
-	gpio_direction_output(TS7670D_V2_EN_SDPWR, 1); // EN_SD_POWER#
-	udelay(1000);
-	gpio_direction_output(TS7670D_V2_EN_SDPWR, 0);
-
-	/* Wait a little bit for the card to wake up fully */
-	udelay(1000000);
 
 	/* SD card */
 	ret = mxsmmc_initialize(bis, 0, NULL, ts7670D_mmc_cd);
