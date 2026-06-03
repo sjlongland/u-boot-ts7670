@@ -1,52 +1,21 @@
+/* SPDX-License-Identifier: GPL-2.0+ */
 /*
+ * (C) Copyright 2026 Stuart Longland <me@vk4msl.com>
+ *
  * (C) Copyright 2011 Freescale Semiconductor, Inc.
+ * Author: Fabio Estevam <fabio.estevam@freescale.com>
  *
- * TS-7400-V2 config
- * Based on m28evk.h
- *
- * SPDX-License-Identifier:	GPL-2.0+
+ * Based on m28evk.h:
+ * Copyright (C) 2011 Marek Vasut <marek.vasut@gmail.com>
+ * on behalf of DENX Software Engineering GmbH
  */
 #ifndef __CONFIGS_TS7670D_H__
 #define __CONFIGS_TS7670D_H__
 
-/* U-Boot Commands */
-#define CONFIG_SYS_NO_FLASH
-
-#define STATUS_LED_BOOT			STATUS_LED_GREEN
-
-#define CONFIG_RED_LED                  MX28_PAD_GPMI_D07__GPIO_0_7
-#define CONFIG_GREEN_LED                MX28_PAD_GPMI_D05__GPIO_0_5
-#define CONFIG_YEL_LED                  MX28_PAD_LCD_RS__GPIO_1_26
-#define CONFIG_BLUE_LED                 MX28_PAD_LCD_VSYNC__GPIO_1_28
-#define STATUS_LED_RED			0
-#define STATUS_LED_GREEN		1
-#define STATUS_LED_YELLOW		2
-#define STATUS_LED_BLUE			3
-
-#define STATUS_LED_BIT                  STATUS_LED_RED
-#define STATUS_LED_STATE                STATUS_LED_ON
-#define STATUS_LED_PERIOD               (CONFIG_SYS_HZ / 2)
-
-#define STATUS_LED_BIT1                 STATUS_LED_GREEN
-#define STATUS_LED_STATE1               STATUS_LED_OFF
-#define STATUS_LED_PERIOD1              (CONFIG_SYS_HZ / 2)
-
-#define STATUS_LED_BIT2                 STATUS_LED_YELLOW
-#define STATUS_LED_STATE2               STATUS_LED_OFF
-#define STATUS_LED_PERIOD2              (CONFIG_SYS_HZ / 2)
-
-#define STATUS_LED_BIT3                 STATUS_LED_BLUE
-#define STATUS_LED_STATE3               STATUS_LED_OFF
-#define STATUS_LED_PERIOD3              (CONFIG_SYS_HZ / 2)
-
-#define CONFIG_FPGA_TDI                 MX28_PAD_LCD_D17__GPIO_1_17
-#define CONFIG_FPGA_TMS                 MX28_PAD_LCD_D18__GPIO_1_18
-#define CONFIG_FPGA_TCK                 MX28_PAD_LCD_D23__GPIO_1_23
-#define CONFIG_FPGA_TDO                 MX28_PAD_LCD_D21__GPIO_1_21
-
 /* Memory configuration */
 #define PHYS_SDRAM_1			0x40000000	/* Base address */
 #define PHYS_SDRAM_1_SIZE		0x40000000	/* Max 1 GB RAM */
+#define CFG_SYS_SDRAM_BASE		PHYS_SDRAM_1
 
 #define CONFIG_AUTOBOOT_KEYED          1
 #define CONFIG_AUTOBOOT_PROMPT         "Press Ctrl+C to abort autoboot in %d second(s)\n"
