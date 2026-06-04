@@ -57,7 +57,7 @@
 			regulator-name = "fec-3v3";
 			regulator-min-microvolt = <3300000>;
 			regulator-max-microvolt = <3300000>;
-			gpio = <&gpio1 10 0>;
+			gpio = <&gpio1 10 1>;
 			regulator-always-on;
 		};
 
