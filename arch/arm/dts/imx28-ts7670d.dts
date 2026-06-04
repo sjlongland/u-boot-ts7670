@@ -391,7 +391,7 @@
 		ethphy0: ethernet-phy@0 {	/* SMSC LAN8710Ai */
 			reg = <0>;
 			max-speed = <100>;
-			reset-gpios = <&gpio4 13 GPIO_ACTIVE_LOW>;
+			reset-gpios = <&gpio2 9 GPIO_ACTIVE_LOW>;
 			reset-delay-us = <1000>;
 			reset-post-delay-us = <1000>;
 		};
