@@ -89,6 +89,8 @@ static int ts7670d_get_sdboot_jp(void)
 int misc_init_r(void)
 {
 	int sdboot = 0;
+	int res;
+	uint8_t enetaddr[6];
 
 	env_set("model", "7670D");
 
@@ -97,29 +99,19 @@ int misc_init_r(void)
 	else env_set("jpsdboot", "on");
 
 	/* Work-around non-working Ethernet */
-	printf("Reading Ethernet address from fuses\n");
-	uint8_t enetaddr[6];
-	u32 fuse_data;
-	int res = fuse_read(0, 0, &fuse_data);
-	if (res < 0) {
-		printf("Failed to read fuse 0/0: %d\n", res);
-		return res;
-	}
-
-	/* Set the OUI */
-	mx28_adjust_mac(0, enetaddr);
-
-	/* Set device MAC from fuses */
-	enetaddr[3] = (fuse_data & 0x00ff0000) >> 16;
-	enetaddr[4] = (fuse_data & 0x0000ff00) >> 8;
-	enetaddr[5] = (fuse_data & 0x000000ff);
-	if (eth_env_set_enetaddr("ethaddr", enetaddr)) {
-		printf("Failed to set ethernet address\n");
+	printf("Reading Ethernet address from fuses: ");
+	imx_get_mac_from_fuse(0, enetaddr);
+	printf("%02x:%02x:%02x:%02x:%02x:%02x ",
+			enetaddr[0], enetaddr[1], enetaddr[2],
+			enetaddr[3], enetaddr[4], enetaddr[5]);
+	if (res = eth_env_set_enetaddr("ethaddr", enetaddr)) {
+		printf("failed to set ${enetaddr} (%d)!\n", res);
+	} else {
+		printf("${enetaddr} set\n");
 	}
 
 	struct mxs_clkctrl_regs *clkctrl_regs =
 		(struct mxs_clkctrl_regs *)MXS_CLKCTRL_BASE;
-	struct udevice *dev;
 
 	/* Try to set RMII clock */
 	writel(CLKCTRL_ENET_TIME_SEL_RMII_CLK | CLKCTRL_ENET_CLK_OUT_EN,
