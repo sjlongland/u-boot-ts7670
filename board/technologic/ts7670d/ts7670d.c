@@ -31,6 +31,7 @@
 #include <lattice.h>
 #include <watchdog.h>
 #include <i2c.h>
+#include <fuse.h>
 
 #define TS7670D_V2_EN_SDPWR     MX28_PAD_PWM3__GPIO_3_28
 #define TS7670D_V2_SDBOOT_JP    MX28_PAD_LCD_D12__GPIO_1_12
@@ -92,9 +93,29 @@ int misc_init_r(void)
 	env_set("model", "7670D");
 
 	sdboot = ts7670d_get_sdboot_jp();
-
 	if(sdboot) env_set("jpsdboot", "off");
 	else env_set("jpsdboot", "on");
+
+	/* Work-around non-working Ethernet */
+	printf("Reading Ethernet address from fuses\n");
+	uint8_t enetaddr[6];
+	u32 fuse_data;
+	int res = fuse_read(0, 0, &fuse_data);
+	if (res < 0) {
+		printf("Failed to read fuse 0/0: %d\n", res);
+		return res;
+	}
+
+	/* Set the OUI */
+	mx28_adjust_mac(0, enetaddr);
+
+	/* Set device MAC from fuses */
+	enetaddr[3] = (fuse_data & 0x00ff0000) >> 16;
+	enetaddr[4] = (fuse_data & 0x0000ff00) >> 8;
+	enetaddr[5] = (fuse_data & 0x000000ff);
+	if (eth_env_set_enetaddr("ethaddr", enetaddr)) {
+		printf("Failed to set ethernet address\n");
+	}
 
 	return 0;
 }
@@ -143,48 +164,3 @@ int board_mmc_init(struct bd_info *bis)
 
 	return 0;
 }
-
-#ifdef	CONFIG_CMD_NET
-
-int board_eth_init(struct bd_info *bis)
-{
-	struct mxs_clkctrl_regs *clkctrl_regs =
-		(struct mxs_clkctrl_regs *)MXS_CLKCTRL_BASE;
-	struct udevice *dev;
-	int ret;
-	uint8_t enetaddr[6];
-
-	ret = cpu_eth_init(bis);
-	if (ret)
-		return ret;
-
-	/* MX28EVK uses ENET_CLK PAD to drive FEC clock */
-	writel(CLKCTRL_ENET_TIME_SEL_RMII_CLK | CLKCTRL_ENET_CLK_OUT_EN,
-	       &clkctrl_regs->hw_clkctrl_enet);
-
-	ret = fecmxc_initialize_multi(bis, 0, 0, MXS_ENET0_BASE);
-	if (ret) {
-		puts("FEC MXS: Unable to init FEC0\n");
-		return ret;
-	}
-
-	dev = eth_get_dev_by_name("FEC0");
-	if (!dev) {
-		puts("FEC MXS: Unable to get FEC0 device entry\n");
-		return -EINVAL;
-	}
-
-	if (!eth_env_get_enetaddr("ethaddr", enetaddr)
-			|| (!enetaddr[3] && !enetaddr[4] && !enetaddr[5])) {
-                printf("No MAC address set in fuses.  Using random mac address.\n");
-                net_random_ethaddr(enetaddr);
-                random_mac = 1;
-                if (eth_env_set_enetaddr("ethaddr", enetaddr)) {
-                        printf("Failed to set ethernet address\n");
-                }
-        }
-
-	return ret;
-}
-
-#endif
