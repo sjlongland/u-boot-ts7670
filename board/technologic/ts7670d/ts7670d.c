@@ -117,6 +117,13 @@ int misc_init_r(void)
 		printf("Failed to set ethernet address\n");
 	}
 
+	struct mxs_clkctrl_regs *clkctrl_regs =
+		(struct mxs_clkctrl_regs *)MXS_CLKCTRL_BASE;
+	struct udevice *dev;
+
+	/* Try to set RMII clock */
+	writel(CLKCTRL_ENET_TIME_SEL_RMII_CLK | CLKCTRL_ENET_CLK_OUT_EN,
+	       &clkctrl_regs->hw_clkctrl_enet);
 	return 0;
 }
 
