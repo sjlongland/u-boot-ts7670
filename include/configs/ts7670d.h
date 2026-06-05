@@ -25,6 +25,9 @@
 #define CONFIG_PREBOOT \
 		" setenv bootdelay 5; "
 
+/* Can't set this in Kconfig apparently! */
+#define CONFIG_MX28_FEC_MAC_IN_OCOTP
+
 /* The rest of the configuration is shared */
 #include <configs/mxs.h>
 
