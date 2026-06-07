@@ -117,26 +117,3 @@ int board_init(void)
 
 	return 0;
 }
-
-static int ts7670D_mmc_cd(int id) {
-	return 1;
-}
-
-int board_mmc_init(struct bd_info *bis)
-{
-	int ret;
-
-	/* SD card */
-	ret = mxsmmc_initialize(bis, 0, NULL, ts7670D_mmc_cd);
-	if(ret != 0) {
-		printf("SD controller initialized with %d\n", ret);
-	}
-
-	/* eMMC */
-	ret = mxsmmc_initialize(bis, 1, NULL, ts7670D_mmc_cd);
-	if(ret != 0) {
-		printf("eMMC controller initialized with %d\n", ret);
-	}
-
-	return 0;
-}
