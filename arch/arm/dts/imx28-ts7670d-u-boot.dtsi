@@ -17,20 +17,20 @@
 		};
 	};
 
-	leds {
-		led_status2: status2 {
+	led-controller {
+		led_power: led-0 {
+			default-state = "on";
+		};
+
+		led_status1: led-1 {
 			default-state = "off";
 		};
 
-		led_status1: status1 {
+		led_activity: led-2 {
 			default-state = "off";
 		};
 
-		led_power: power {
-			default-state = "off";
-		};
-
-		led_activity: activity {
+		led_status2: led-3 {
 			default-state = "off";
 		};
 	};
