@@ -71,6 +71,17 @@ int board_early_init_f(void)
 	/* Wait a little bit for the card to wake up fully */
 	udelay(1000000);
 
+#if defined(CONFIG_CMD_NET)
+	/*
+	 * Initialise the Ethernet clock.  This function used to be
+	 * called in board_eth_init, but that function is now removed and is no
+	 * longer called.  TODO: find out the fate of cpu_eth_init.
+	 */
+	int ret = cpu_eth_init(NULL);
+	if (ret)
+		return ret;
+#endif
+
 	return 0;
 }
 
@@ -143,48 +154,3 @@ int board_mmc_init(struct bd_info *bis)
 
 	return 0;
 }
-
-#ifdef	CONFIG_CMD_NET
-
-int board_eth_init(struct bd_info *bis)
-{
-	struct mxs_clkctrl_regs *clkctrl_regs =
-		(struct mxs_clkctrl_regs *)MXS_CLKCTRL_BASE;
-	struct udevice *dev;
-	int ret;
-	uint8_t enetaddr[6];
-
-	ret = cpu_eth_init(bis);
-	if (ret)
-		return ret;
-
-	/* MX28EVK uses ENET_CLK PAD to drive FEC clock */
-	writel(CLKCTRL_ENET_TIME_SEL_RMII_CLK | CLKCTRL_ENET_CLK_OUT_EN,
-	       &clkctrl_regs->hw_clkctrl_enet);
-
-	ret = fecmxc_initialize_multi(bis, 0, 0, MXS_ENET0_BASE);
-	if (ret) {
-		puts("FEC MXS: Unable to init FEC0\n");
-		return ret;
-	}
-
-	dev = eth_get_dev_by_name("FEC0");
-	if (!dev) {
-		puts("FEC MXS: Unable to get FEC0 device entry\n");
-		return -EINVAL;
-	}
-
-	if (!eth_env_get_enetaddr("ethaddr", enetaddr)
-			|| (!enetaddr[3] && !enetaddr[4] && !enetaddr[5])) {
-                printf("No MAC address set in fuses.  Using random mac address.\n");
-                net_random_ethaddr(enetaddr);
-                random_mac = 1;
-                if (eth_env_set_enetaddr("ethaddr", enetaddr)) {
-                        printf("Failed to set ethernet address\n");
-                }
-        }
-
-	return ret;
-}
-
-#endif
