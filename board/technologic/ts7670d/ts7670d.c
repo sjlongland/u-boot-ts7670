@@ -72,6 +72,17 @@ int board_early_init_f(void)
 	/* Wait a little bit for the card to wake up fully */
 	udelay(1000000);
 
+#if defined(CONFIG_CMD_NET)
+	/*
+	 * Initialise the Ethernet clock.  This function used to be
+	 * called in board_eth_init, but that function is now removed and is no
+	 * longer called.  TODO: find out the fate of cpu_eth_init.
+	 */
+	int ret = cpu_eth_init(NULL);
+	if (ret)
+		return ret;
+#endif
+
 	return 0;
 }
 
