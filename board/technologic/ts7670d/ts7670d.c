@@ -45,7 +45,6 @@ void mx28_adjust_mac(int dev_id, unsigned char *mac)
 	mac[2] = 0x69;
 }
 
-
 int board_early_init_f(void)
 {
 	/* IO0 clock at 480MHz */
@@ -53,11 +52,9 @@ int board_early_init_f(void)
 	/* IO1 clock at 480MHz */
 	mxs_set_ioclk(MXC_IOCLK1, 480000);
 
-	/* SSP clocks at 96MHz */
-	mxs_set_sspclk(MXC_SSPCLK0, 96000, 0);
-	/* SSP clocks at 96MHz */
-	mxs_set_sspclk(MXC_SSPCLK1, 96000, 0);
-	/* SSP2 clock at 160MHz */
+	/* SSP clocks at 160MHz */
+	mxs_set_sspclk(MXC_SSPCLK0, 160000, 0);
+	mxs_set_sspclk(MXC_SSPCLK1, 160000, 0);
 	mxs_set_sspclk(MXC_SSPCLK2, 160000, 0);
 
 	/* Power-cycle eMMC */
