@@ -34,12 +34,10 @@
 #include <fuse.h>
 
 #define TS7670D_V2_EN_SDPWR     MX28_PAD_PWM3__GPIO_3_28
-#define TS7670D_V2_SDBOOT_JP    MX28_PAD_LCD_D12__GPIO_1_12
 #define TS7670D_V2_POWER_FAIL	MX28_PAD_SSP0_DETECT__GPIO_2_9
 
 DECLARE_GLOBAL_DATA_PTR;
 int random_mac = 0;
-static int ts7670d_get_sdboot_jp(void);
 
 void mx28_adjust_mac(int dev_id, unsigned char *mac)
 {
@@ -91,48 +89,17 @@ int dram_init(void)
 	return mxs_dram_init();
 }
 
-static int ts7670d_get_sdboot_jp(void)
-{
-	gpio_direction_input(TS7670D_V2_SDBOOT_JP);
-	return gpio_get_value(TS7670D_V2_SDBOOT_JP);
-}
-
 int misc_init_r(void)
 {
-	int sdboot = 0;
-	int res;
-	uint8_t enetaddr[6];
-
 	env_set("model", "7670D");
 
-	sdboot = ts7670d_get_sdboot_jp();
-	if(sdboot) env_set("jpsdboot", "off");
-	else env_set("jpsdboot", "on");
-
-	/* Work-around non-working Ethernet */
-	printf("Reading Ethernet address from fuses: ");
-	imx_get_mac_from_fuse(0, enetaddr);
-	printf("%02x:%02x:%02x:%02x:%02x:%02x ",
-			enetaddr[0], enetaddr[1], enetaddr[2],
-			enetaddr[3], enetaddr[4], enetaddr[5]);
-	if (res = eth_env_set_enetaddr("ethaddr", enetaddr)) {
-		printf("failed to set ${enetaddr} (%d)!\n", res);
-	} else {
-		printf("${enetaddr} set\n");
-	}
-
-	struct mxs_clkctrl_regs *clkctrl_regs =
-		(struct mxs_clkctrl_regs *)MXS_CLKCTRL_BASE;
-
-	/* Try to set RMII clock */
-	writel(CLKCTRL_ENET_TIME_SEL_RMII_CLK | CLKCTRL_ENET_CLK_OUT_EN,
-	       &clkctrl_regs->hw_clkctrl_enet);
 	return 0;
 }
 
 void board_boot_order(u32 *spl_boot_list)
 {
-	if (ts7670d_get_sdboot_jp() > 0) {
+	const char env_device[] = {CONFIG_ENV_EXT4_DEVICE_AND_PART};
+	if (env_device[0] == '0') {
 		spl_boot_list[0] = BOOT_DEVICE_MMC1;
 	} else {
 		spl_boot_list[0] = BOOT_DEVICE_MMC2;
