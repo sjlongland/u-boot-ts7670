@@ -497,7 +497,7 @@
 &ssp0 {
 	compatible = "fsl,imx28-mmc";
 	pinctrl-names = "default";
-	pinctrl-0 = <&mmc0_4bit_pins>;
+	pinctrl-0 = <&mmc0_4bit_pins &mmc0_sck_cfg>;
 	vmmc-supply = <&reg_sd_vmmc>;
 	bus-width = <4>;
 	broken-cd;
@@ -509,7 +509,7 @@
 &ssp1 {
 	compatible = "fsl,imx28-mmc";
 	pinctrl-names = "default";
-	pinctrl-0 = <&mmc1_4bit_pins>;
+	pinctrl-0 = <&mmc1_4bit_pins &mmc1_sck_cfg>;
 	vmmc-supply = <&reg_sd_vmmc>;
 	bus-width = <4>;
 	broken-cd;
@@ -522,7 +522,7 @@
 &ssp2 {
 	compatible = "fsl,imx28-mmc";
 	pinctrl-names = "default";
-	pinctrl-0 = <&mmc2_4bit_pins>;
+	pinctrl-0 = <&mmc2_4bit_pins &mmc2_sck_cfg_a>;
 	vmmc-supply = <&reg_sd_vmmc>;
 	bus-width = <4>;
 	broken-cd;
