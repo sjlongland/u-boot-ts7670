@@ -94,12 +94,26 @@ int misc_init_r(void)
 
 void board_boot_order(u32 *spl_boot_list)
 {
+#ifdef CONFIG_ENV_IS_IN_EXT4
 	const char env_device[] = {CONFIG_ENV_EXT4_DEVICE_AND_PART};
-	if (env_device[0] == '0') {
+	switch (env_device[0]) {
+	case '0':
 		spl_boot_list[0] = BOOT_DEVICE_MMC1;
-	} else {
+		break;
+	case '1':
 		spl_boot_list[0] = BOOT_DEVICE_MMC2;
+		break;
 	}
+#elif CONFIG_ENV_IS_IN_MMC
+	switch (CONFIG_ENV_MMC_DEVICE_INDEX) {
+	case 0:
+		spl_boot_list[0] = BOOT_DEVICE_MMC1;
+		break;
+	case 1:
+		spl_boot_list[0] = BOOT_DEVICE_MMC2;
+		break;
+	}
+#endif
 }
 
 int board_init(void)
