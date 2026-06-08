@@ -52,10 +52,10 @@ int board_early_init_f(void)
 	/* IO1 clock at 480MHz */
 	mxs_set_ioclk(MXC_IOCLK1, 480000);
 
-	/* SSP clocks at 160MHz */
-	mxs_set_sspclk(MXC_SSPCLK0, 160000, 0);
-	mxs_set_sspclk(MXC_SSPCLK1, 160000, 0);
-	mxs_set_sspclk(MXC_SSPCLK2, 160000, 0);
+	/* SSP clocks at 52MHz */
+	mxs_set_sspclk(MXC_SSPCLK0, 52000, 0);
+	mxs_set_sspclk(MXC_SSPCLK1, 52000, 0);
+	mxs_set_sspclk(MXC_SSPCLK2, 52000, 0);
 
 	/* Power-cycle eMMC */
 	mxs_iomux_setup_pad(TS7670D_V2_EN_SDPWR);
