@@ -10,6 +10,7 @@
  */
 
 #include <log.h>
+#include <linux/delay.h>
 #include <linux/errno.h>
 #include <asm/io.h>
 #include <asm/arch/clock.h>
@@ -306,6 +307,9 @@ void mxs_set_ssp_busclock(unsigned int bus, uint32_t freq)
 
 	debug("SPI%d: Set freq rate to %d KHz (requested %d KHz)\n",
 		bus, tgtclk, freq);
+
+	/* Delay a bit to let the clock rate settle */
+	udelay(1000);
 }
 
 void mxs_set_lcdclk(uint32_t __maybe_unused lcd_base, uint32_t freq)
